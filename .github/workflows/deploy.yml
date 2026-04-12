@@ -17,6 +17,8 @@ jobs:
           distribution: 'corretto'
       - name: Run a one-line script 
         run: echo "Let's start pull job"
+      - name: Run unit tests
+        run: ./gradlew test
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
