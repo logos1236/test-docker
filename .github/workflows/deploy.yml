@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run a one-line script 
-        run: echo Let's start pull job
+        run: echo "Let's start pull job"
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
