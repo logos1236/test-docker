@@ -23,11 +23,21 @@ jobs:
         run: | 
             ./gradlew test
             ./gradlew build
-      - name: Upload jar
-        uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v4
+      - name: Copy files via SSH
+        uses: appleboy/scp-action@v1
         with:
-         name: testSpring-0.0.1-SNAPSHOT.jar
-         path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          source: "build/libs/testSpring-0.0.1-SNAPSHOT.jar"
+          target: "/home/a1252261/app/"
+      #- name: Upload jar
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #   name: testSpring-0.0.1-SNAPSHOT.jar
+      #   path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
