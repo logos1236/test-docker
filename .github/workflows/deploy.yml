@@ -17,32 +17,27 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
-      - name: Run a one-line script 
+      - name: Run a one-line script
         run: echo "Let's start pull job"
       - name: Run unit tests abd build
-        run: | 
-            ./gradlew test
-            ./gradlew build
-      - uses: actions/checkout@v4
-      - uses: actions/upload-artifact@v4
-      - name: Test file exist
         run: |
-            cd build/libs/
-            ls -l            
-      - name: Copy files via SSH
-        uses: appleboy/scp-action@v1
+          ./gradlew test
+          ./gradlew build
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: testSpring-0.0.1-SNAPSHOT.jar
+          path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+      - uses: actions/checkout@v4
+        name: Copy files via SSH
+      - uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
-          source: "build/libs/testSpring-0.0.1-SNAPSHOT.jar"
+          source: "testSpring-0.0.1-SNAPSHOT.jar"
           target: "/home/a1252261/app"
-      #- name: Upload jar
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #   name: testSpring-0.0.1-SNAPSHOT.jar
-      #   path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
@@ -50,6 +45,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
-          script: | 
+          script: |
             cd /home/a1252261/app/test-docker
             git pull
