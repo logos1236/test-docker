@@ -27,7 +27,7 @@ jobs:
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
