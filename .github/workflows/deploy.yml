@@ -23,11 +23,11 @@ jobs:
         run: | 
             ./gradlew test
             ./gradlew build
-      #- name: Upload jar
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #   name: testSpring-0.0.1-SNAPSHOT.jar
-      #   path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+      - name: Upload jar
+        uses: actions/upload-artifact@v2
+        with:
+         name: testSpring-0.0.1-SNAPSHOT.jar
+         path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
