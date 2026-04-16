@@ -24,6 +24,10 @@ jobs:
             ./gradlew test
             ./gradlew build
       - uses: actions/checkout@v4
+      - name: Test file exist
+        run: |
+            cd build/libs/
+            ls -l            
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
         with:
