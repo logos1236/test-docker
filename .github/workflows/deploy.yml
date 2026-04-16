@@ -24,6 +24,7 @@ jobs:
             ./gradlew test
             ./gradlew build
       - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
       - name: Test file exist
         run: |
             cd build/libs/
