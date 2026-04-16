@@ -23,11 +23,16 @@ jobs:
         run: |
           ./gradlew test
           ./gradlew build
-      - name: Upload jar
-        uses: actions/upload-artifact@v4
+      #- name: Upload jar
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: testSpring-0.0.1-SNAPSHOT.jar
+      #    path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
         with:
           name: testSpring-0.0.1-SNAPSHOT.jar
-          path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+          path: build/libs
       - uses: actions/checkout@v4
         name: Copy files via SSH
       #- uses: appleboy/scp-action@v1
