@@ -23,7 +23,7 @@ jobs:
         run: |
           ./gradlew test
           ./gradlew build
-      - name: Copy JAR via SCP
+      - name: Copy JAR to server
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -32,7 +32,7 @@ jobs:
           port: 22
           source: "build/libs/testSpring-0.0.1-SNAPSHOT.jar"
           strip_components: 2
-          target: "/home/a1252261/app"
+          target: "/home/a1252261/app/build"
       #- name: Upload jar
       #  uses: actions/upload-artifact@v4
       #  with:
