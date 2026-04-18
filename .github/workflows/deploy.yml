@@ -23,33 +23,42 @@ jobs:
         run: |
           ./gradlew test
           ./gradlew build
-      - name: Upload jar
-        uses: actions/upload-artifact@v4
-        with:
-          name: testSpring-0.0.1-SNAPSHOT.jar
-          path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: testSpring-0.0.1-SNAPSHOT.jar
-          path: ./build
-      - uses: actions/checkout@v4
-        name: Copy files via SSH
-      - uses: appleboy/scp-action@v1
+      - name: Copy JAR via SCP
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
-          source: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+          source: "build/libs/testSpring-0.0.1-SNAPSHOT.jar"
           target: "/home/a1252261/app"
-      - name: SSH Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
-          script: |
-            cd /home/a1252261/app/test-docker
-            git pull
+      #- name: Upload jar
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: testSpring-0.0.1-SNAPSHOT.jar
+      #    path: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+      #- name: Download Artifact
+      #  uses: actions/download-artifact@v4
+      #  with:
+      #    name: testSpring-0.0.1-SNAPSHOT.jar
+      #    path: ./build
+      #- uses: actions/checkout@v4
+      #  name: Copy files via SSH
+      #- uses: appleboy/scp-action@master
+      #  with:
+      #    host: ${{ secrets.SSH_HOST }}
+      #    username: ${{ secrets.SSH_USERNAME }}
+      #    password: ${{ secrets.SSH_PASSWORD }}
+      #    port: 22
+      #    source: build/libs/testSpring-0.0.1-SNAPSHOT.jar
+      #    target: "/home/a1252261/app"
+      # - name: SSH Deploy
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     password: ${{ secrets.SSH_PASSWORD }}
+      #     port: 22
+      #     script: |
+      #       cd /home/a1252261/app/test-docker
+      #       git pull
